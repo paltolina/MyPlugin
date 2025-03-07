@@ -1,33 +1,22 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Общие сведения об этой сборке предоставляются следующим набором
-// набора атрибутов. Измените значения этих атрибутов для изменения сведений,
-// связанные со сборкой.
+// Общие сведения о сборке
 [assembly: AssemblyTitle("MyPlugin")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Плагин для автоматического взаимодействия ChatGPT с Revit")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MyPlugin")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyCompany("MyCompany")]
+[assembly: AssemblyProduct("MyPlugin for Revit")]
+[assembly: AssemblyCopyright("Copyright © MyCompany 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
-// для компонентов COM. Если необходимо обратиться к типу в этой сборке через
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
+// Отключение COM-совместимости
 [assembly: ComVisible(false)]
 
-// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
+// GUID для библиотеки типов (не меняй, если уже используешь)
 [assembly: Guid("eb0df34a-682f-435c-87b4-9a5a14db29f5")]
 
-// Сведения о версии сборки состоят из указанных ниже четырех значений:
-//
-//      Основной номер версии
-//      Дополнительный номер версии
-//      Номер сборки
-//      Редакция
-//
+// Версия сборки
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

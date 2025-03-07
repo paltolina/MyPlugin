@@ -20,8 +20,8 @@ namespace MyPlugin
 
             PushButton pushButton = panel.AddItem(buttonData) as PushButton;
 
-            Uri smallIcon = new Uri(@"C:\Users\roman\Documents\Polina\MyPlugin\Resources\icon.png");
-            Uri largeIcon = new Uri(@"C:\Users\roman\Documents\Polina\MyPlugin\Resources\icon.png");
+            Uri smallIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
+            Uri largeIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
 
             pushButton.Image = new BitmapImage(smallIcon);
             pushButton.LargeImage = new BitmapImage(largeIcon);
