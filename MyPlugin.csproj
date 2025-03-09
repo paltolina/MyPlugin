@@ -15,13 +15,14 @@
 		<PlatformTarget>x64</PlatformTarget>
 		<RootNamespace></RootNamespace>
 		<AssemblyName></AssemblyName>
+		<BaseOutputPath>C:\Users\roman\Documents\Polina\Git\bin\Debug</BaseOutputPath>
 	</PropertyGroup>
 
 	<!-- Настройки Debug -->
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
+		<Optimize>False</Optimize>
 		<OutputPath>bin\Debug\</OutputPath>
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 		<WarningLevel>4</WarningLevel>
@@ -30,7 +31,7 @@
 	<!-- Настройки Release -->
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
+		<Optimize>True</Optimize>
 		<OutputPath>bin\Release\</OutputPath>
 		<DefineConstants>TRACE</DefineConstants>
 		<WarningLevel>4</WarningLevel>

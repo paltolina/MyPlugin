@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
 namespace MyPlugin
 {
-    public class App : IExternalApplication
+    public class App : IExternalApplication /*Связывание окна с кнопкой в Ribbon UI*/
     {
         public Result OnStartup(UIControlledApplication application)
         {

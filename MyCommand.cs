@@ -7,7 +7,7 @@ using System.Net.Http;
 namespace MyPlugin
 {
     [Transaction(TransactionMode.Manual)]
-    public class MyCommand : IExternalCommand
+    public class MyCommand : IExternalCommand /*запуск окна из команды*/
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
