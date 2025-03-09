@@ -35,6 +35,10 @@
 		<DefineConstants>TRACE</DefineConstants>
 		<WarningLevel>4</WarningLevel>
 	</PropertyGroup>
+	<ItemGroup>
+	  <EmbeddedResource Remove="Resources\**" />
+	  <None Remove="Resources\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Библиотеки Revit -->
@@ -81,11 +85,6 @@
 	</ItemGroup>
 
 	<!-- Ресурсы -->
-	<ItemGroup>
-		<Content Include="Resources\icon.png">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
 
 	<!-- Файл конфигурации -->
 	<ItemGroup>

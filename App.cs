@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
@@ -9,23 +10,40 @@ namespace MyPlugin
     {
         public Result OnStartup(UIControlledApplication application)
         {
+            //string tabName = "Мои плагины";
+            //try { application.CreateRibbonTab(tabName); } catch { }
+
+            //RibbonPanel panel = application.CreateRibbonPanel(tabName, "Инструменты");
+
+            //string assemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            //PushButtonData buttonData = new PushButtonData("AI for Revit", "AI for Revit", assemblyPath, "MyPlugin.MyCommand");
+
+            //PushButton pushButton = panel.AddItem(buttonData) as PushButton;
+
+            //Uri smallIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
+            //Uri largeIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
+
+            //pushButton.Image = new BitmapImage(smallIcon);
+            //pushButton.LargeImage = new BitmapImage(largeIcon);
+
+
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location,
+                    iconsDirectoryPath = Path.GetDirectoryName(assemblyLocation) + @"\icons\";
             string tabName = "Мои плагины";
-            try { application.CreateRibbonTab(tabName); } catch { }
 
-            RibbonPanel panel = application.CreateRibbonPanel(tabName, "Инструменты");
+            // Создаем вкладку и панель
+            application.CreateRibbonTab(tabName);
+            {
+                RibbonPanel panel = application.CreateRibbonPanel(tabName, "AI for Revit");
 
-            string assemblyPath = Assembly.GetExecutingAssembly().Location;
+                // Добавляем кнопку запуска плагина
 
-            PushButtonData buttonData = new PushButtonData("AI for Revit", "AI for Revit", assemblyPath, "MyPlugin.MyCommand");
-
-            PushButton pushButton = panel.AddItem(buttonData) as PushButton;
-
-            Uri smallIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
-            Uri largeIcon = new Uri(@"C:\Users\IRINA\Desktop\Папка Полины С\диплом\MyPlugin\Resources\icon.png");
-
-            pushButton.Image = new BitmapImage(smallIcon);
-            pushButton.LargeImage = new BitmapImage(largeIcon);
-
+                panel.AddItem(new PushButtonData(nameof(MyCommand), "AI for Revit", assemblyLocation, typeof(MyCommand).FullName)
+                {
+                    LargeImage = new BitmapImage(new Uri(iconsDirectoryPath + "icon.png"))
+                });
+            }
             return Result.Succeeded;
         }
 
