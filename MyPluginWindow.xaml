@@ -6,7 +6,7 @@
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Generic.xaml"/>
+        <ResourceDictionary Source="/MyPlugin;component/Themes/Generic.xaml"/>
     </Window.Resources>
 
     <Grid Margin="10">
