@@ -40,6 +40,9 @@
 	  <EmbeddedResource Remove="Resources\**" />
 	  <None Remove="Resources\**" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Themes\Generic.xaml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Библиотеки Revit -->
@@ -83,6 +86,7 @@
 		<Compile Include="MyPluginWindow.xaml.cs" />
 		<Compile Include="Properties\AssemblyInfo.cs" />
 		<Page Include="MyPluginWindow.xaml" />
+		<Page Include="Themes\Generic.xaml" />
 	</ItemGroup>
 
 	<!-- Ресурсы -->
