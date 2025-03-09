@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
 using Newtonsoft.Json;
 using Autodesk.Revit.UI;
 
@@ -30,8 +32,11 @@ namespace MyPlugin
             try
             {
                 OutputTextBox.Text = "Ожидание ответа...";
-                string response = await SendToChatGPT(userInput);
-                OutputTextBox.Text = response;
+                ChatGPTResponse response = await SendToChatGPT(userInput);
+
+                OutputTextBox.Text = response.Answer;
+
+                Logger.SaveLog(userInput, response.Answer, response.Cost, response.ErrorMessage);
             }
             catch (Exception ex)
             {
@@ -44,7 +49,7 @@ namespace MyPlugin
             this.Close();
         }
 
-        private async Task<string> SendToChatGPT(string prompt)
+        private async Task<ChatGPTResponse> SendToChatGPT(string prompt)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -55,9 +60,9 @@ namespace MyPlugin
                     model = "gpt-4",
                     messages = new[]
                     {
-                        new { role = "system", content = "Ты помощник для пользователей Revit." },
-                        new { role = "user", content = prompt }
-                    },
+                new { role = "system", content = "Ты помощник для пользователей Revit." },
+                new { role = "user", content = prompt }
+            },
                     max_tokens = 100
                 };
 
@@ -65,35 +70,49 @@ namespace MyPlugin
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response;
+                string responseString;
+                double cost = 0;
+                string errorMessage = null;
 
                 try
                 {
                     response = await client.PostAsync(apiUrl, content);
+                    responseString = await response.Content.ReadAsStringAsync();
                 }
-                catch (HttpRequestException httpEx)
+                catch (HttpRequestException)
                 {
-                    throw new Exception("Ошибка соединения с сервером. Проверьте интернет-соединение.", httpEx);
+                    return new ChatGPTResponse
+                    {
+                        Answer = "",
+                        Cost = 0,
+                        ErrorMessage = "Ошибка соединения с сервером. Проверьте интернет-соединение."
+                    };
                 }
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    string errorDetails = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Ошибка API: {response.StatusCode} \n{errorDetails}");
+                    return new ChatGPTResponse
+                    {
+                        Answer = "",
+                        Cost = 0,
+                        ErrorMessage = $"Ошибка API: {response.StatusCode} \n{responseString}"
+                    };
                 }
 
-                string responseString = await response.Content.ReadAsStringAsync();
+                dynamic responseObject = JsonConvert.DeserializeObject(responseString);
+                string answer = responseObject?.choices?[0]?.message?.content?.ToString() ?? "Ошибка: пустой ответ.";
 
-                dynamic responseObject;
-                try
+                int promptTokens = responseObject?.usage?.prompt_tokens ?? 0;
+                int completionTokens = responseObject?.usage?.completion_tokens ?? 0;
+                cost = (promptTokens / 1000.0 * 0.03) + (completionTokens / 1000.0 * 0.06);
+                cost = Math.Round(cost, 4);
+
+                return new ChatGPTResponse
                 {
-                    responseObject = JsonConvert.DeserializeObject(responseString);
-                }
-                catch (JsonException jsonEx)
-                {
-                    throw new Exception("Ошибка обработки ответа от API.", jsonEx);
-                }
-
-                return responseObject?.choices?[0]?.message?.content?.ToString() ?? "Ошибка: пустой ответ от API.";
+                    Answer = answer,
+                    Cost = cost,
+                    ErrorMessage = null
+                };
             }
         }
 
@@ -117,7 +136,7 @@ namespace MyPlugin
 
         private void LogButton_Click(object sender, RoutedEventArgs e)
         {
-            TaskDialog.Show("Журнал", "Функция журнала пока не реализована.");
+            Logger.OpenLog();
         }
     }
 }
