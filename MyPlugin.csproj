@@ -86,7 +86,10 @@
 		<Compile Include="MyPluginWindow.xaml.cs" />
 		<Compile Include="Properties\AssemblyInfo.cs" />
 		<Page Include="MyPluginWindow.xaml" />
-		<Page Include="Themes\Generic.xaml" />
+		<Page Include="Themes\Generic.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Page>
 	</ItemGroup>
 
 	<!-- Ресурсы -->
