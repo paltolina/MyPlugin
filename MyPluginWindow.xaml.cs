@@ -7,34 +7,88 @@ using System.Windows;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.DB;
+using System.Reflection;
 
 namespace MyPlugin
 {
     public partial class MyPluginWindow : Window
     {
-        private static readonly string apiKey = "ВАШ_API_КЛЮЧ";
-        private static readonly string apiUrl = "https://api.openai.com/v1/chat/completions";
+        private readonly ExternalCommandData _commandData;
+        private string _message;
+        private readonly ElementSet _elements;
 
-        public MyPluginWindow()
+        private static readonly string apiKey = Environment.GetEnvironmentVariable("DEEPSEEK_FREE");
+        private static readonly string apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+        private static readonly string MODEL = "deepseek/deepseek-chat:free";
+
+        public MyPluginWindow(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            this._commandData = commandData;
+            this._message = message;
+            this._elements = elements;
+
+
             InitializeComponent();
         }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string userInput = InputTextBox.Text;
-            if (string.IsNullOrWhiteSpace(userInput))
+            InputTextBox.Clear();
+
+            if (string.IsNullOrWhiteSpace(userInput)) //  || string.ToLower(userInput) == "введите запрос" || string.ToLower(userInput).Trim() == "/edit"
             {
                 TaskDialog.Show("Ошибка", "Введите сообщение перед отправкой!");
                 return;
             }
+
+            //if (userInput.StartsWith("/edit"))
+            //{
+
+            //    return;
+            //}
 
             try
             {
                 OutputTextBox.Text = "Ожидание ответа...";
                 ChatGPTResponse response = await SendToChatGPT(userInput);
 
+                response.Answer = response.Answer.Replace("```csharp", string.Empty).Replace("```", string.Empty);
+
                 OutputTextBox.Text = response.Answer;
+
+                OutputTextBox.Text += $"\nСохраняю скрипт...";
+
+                // Сохраняем скрипт в файл cs
+                try
+                {
+                    string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+
+                    using (StreamWriter writer = new StreamWriter(Path.GetDirectoryName(assemblyLocation) + @"\AICommand.cs", false, Encoding.UTF8))
+                    {
+                        writer.WriteLine(response.Answer);
+                    }
+                    OutputTextBox.Text += "\nСкрипт успешно сохранен!";
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("Ошибка", $"Произошла ошибка при сохранении скрипта: {ex.Message}");
+                }
+
+                OutputTextBox.Text += "\nЗапускаю скрипт...";
+
+                ScriptCompiler compiler = new ScriptCompiler();
+                Result result = compiler.Execute(_commandData, ref _message, _elements);
+
+                if (result == Result.Failed)
+                {
+                    OutputTextBox.Text += "\nПроизошла ошибка при запуске скрипта.";
+                }
+                else
+                {
+                    OutputTextBox.Text += "\nСкрипт успешно выполнен!";
+                }
 
                 Logger.SaveLog(userInput, response.Answer, response.Cost, response.ErrorMessage);
             }
@@ -57,13 +111,14 @@ namespace MyPlugin
 
                 var requestBody = new
                 {
-                    model = "gpt-4",
+                    model = MODEL,
                     messages = new[]
                     {
-                new { role = "system", content = "Ты помощник для пользователей Revit." },
+                new { role = "system", content = "Ты помощник для пользователей Autodesk Revit. Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI,  выполняющий задачу, о которой я попрошу тебя в следующем абзаце. Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта. Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\"" }, // Ты помощник для пользователей Revit.
                 new { role = "user", content = prompt }
             },
-                    max_tokens = 100
+                    max_tokens = 5000
+                    //max_tokens = 100
                 };
 
                 var jsonContent = JsonConvert.SerializeObject(requestBody);
@@ -72,7 +127,7 @@ namespace MyPlugin
                 HttpResponseMessage response;
                 string responseString;
                 double cost = 0;
-                string errorMessage = null;
+                //string errorMessage = null;
 
                 try
                 {
@@ -100,7 +155,9 @@ namespace MyPlugin
                 }
 
                 dynamic responseObject = JsonConvert.DeserializeObject(responseString);
-                string answer = responseObject?.choices?[0]?.message?.content?.ToString() ?? "Ошибка: пустой ответ.";
+                //string answer = responseObject?.choices?[0]?.message?.content?.ToString() ?? "Ошибка: пустой ответ.";
+                //string reasoning = responseObject?["choices"]?[0]?["message"]?["reasoning"]?.ToString();
+                string answer = responseObject?["choices"]?[0]?["message"]?["content"]?.ToString() ?? "Ошибка: пустой ответ.";
 
                 int promptTokens = responseObject?.usage?.prompt_tokens ?? 0;
                 int completionTokens = responseObject?.usage?.completion_tokens ?? 0;

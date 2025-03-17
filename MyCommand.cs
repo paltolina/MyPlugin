@@ -12,8 +12,8 @@ namespace MyPlugin
         {
             try
             {
-                MyPluginWindow window = new MyPluginWindow();
-                window.Show();
+                MyPluginWindow window = new MyPluginWindow(commandData, ref message, elements);
+                window.ShowDialog();
                 return Result.Succeeded;
             }
             catch (Exception ex)
