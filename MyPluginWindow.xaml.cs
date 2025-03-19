@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Diagnostics;
 using Newtonsoft.Json;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
@@ -14,9 +13,9 @@ namespace MyPlugin
 {
     public partial class MyPluginWindow : Window
     {
-        private readonly ExternalCommandData _commandData;
-        private string _message;
-        private readonly ElementSet _elements;
+        public ExternalCommandData _commandData;
+        public string _message;
+        public ElementSet _elements;
 
         private static readonly string apiKey = Environment.GetEnvironmentVariable("DEEPSEEK_FREE");
         private static readonly string apiUrl = "https://openrouter.ai/api/v1/chat/completions";
@@ -54,7 +53,7 @@ namespace MyPlugin
                 OutputTextBox.Text = "Ожидание ответа...";
                 ChatGPTResponse response = await SendToChatGPT(userInput);
 
-                response.Answer = response.Answer.Replace("```csharp", string.Empty).Replace("```", string.Empty);
+                response.Answer = response.Answer.Replace("```csharp", string.Empty).Replace("```", string.Empty).Trim();
 
                 OutputTextBox.Text = response.Answer;
 
@@ -114,7 +113,7 @@ namespace MyPlugin
                     model = MODEL,
                     messages = new[]
                     {
-                new { role = "system", content = "Ты помощник для пользователей Autodesk Revit. Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI,  выполняющий задачу, о которой я попрошу тебя в следующем абзаце. Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта. Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\"" }, // Ты помощник для пользователей Revit.
+                new { role = "system", content = "Ты помощник для пользователей Autodesk Revit. Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI, выполняющий задачу, о которой попросит тебя пользователь. Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта. Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\", пространства имён быть не должно. Скрипт должен содержать Все импорты Библиотек, которые он использует. Если используется System.Linq, то он обязательно должен импортироваться." }, // Ты помощник для пользователей Revit.
                 new { role = "user", content = prompt }
             },
                     max_tokens = 5000

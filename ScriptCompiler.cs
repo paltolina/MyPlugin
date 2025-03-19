@@ -2,10 +2,6 @@
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using Autodesk.Revit.DB;
@@ -86,7 +82,8 @@ namespace MyPlugin
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка!");
-                    return Result.Failed;
+                    throw ex;
+                    //return Result.Failed;
                 }
             }
 
