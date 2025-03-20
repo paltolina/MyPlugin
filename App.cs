@@ -12,7 +12,7 @@ namespace MyPlugin
         {
             string assemblyLocation = Assembly.GetExecutingAssembly().Location,
                     iconsDirectoryPath = Path.GetDirectoryName(assemblyLocation) + @"\icons\";
-            string tabName = "Мои плагины";
+            string tabName = "AI Plugin";
 
             // Создаем вкладку и панель
             application.CreateRibbonTab(tabName);

@@ -12,7 +12,7 @@ namespace MyPlugin
         {
             try
             {
-                MyPluginWindow window = new MyPluginWindow();
+                MyPluginWindow window = new MyPluginWindow(commandData, ref message, elements);
                 window.ShowDialog();
                 return Result.Succeeded;
             }
