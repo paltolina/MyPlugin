@@ -4,7 +4,6 @@
     <!-- Стиль для кнопок с закругленными краями -->
     <Style x:Key="RoundedButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="#6D6E71"/>
-        <!-- Серый цвет -->
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Padding" Value="5"/>
@@ -22,8 +21,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#8DC63F"/>
-                            <!-- Зеленый цвет при нажатии -->
+                            <Setter Property="Background" Value="#CC6928"/>
+                            <!-- Цвет при нажатии -->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

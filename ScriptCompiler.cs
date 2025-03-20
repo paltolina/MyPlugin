@@ -25,7 +25,6 @@ namespace MyPlugin
                 return Result.Failed;
             }
 
-
             // Создаём провайдер для компиляции C# кода
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters parameters = new CompilerParameters();
@@ -70,7 +69,6 @@ namespace MyPlugin
                     // Добавляем метод Execute
                     MethodInfo method = type.GetMethod("Execute");
 
-
                     // Вызываем метод Execute
                     Result result = (Result)method.Invoke(instance, new object[] { commandData, message, elements });
                     if(result == Result.Failed)
@@ -86,7 +84,6 @@ namespace MyPlugin
                     //return Result.Failed;
                 }
             }
-
 
             return Result.Succeeded;
         }

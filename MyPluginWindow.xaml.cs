@@ -51,7 +51,7 @@ namespace MyPlugin
             try
             {
                 OutputTextBox.Text = "Ожидание ответа...";
-                ChatGPTResponse response = await SendToChatGPT(userInput);
+                AIResponse response = await SendToChatGPT(userInput);
 
                 response.Answer = response.Answer.Replace("```csharp", string.Empty).Replace("```", string.Empty).Trim();
 
@@ -102,7 +102,7 @@ namespace MyPlugin
             this.Close();
         }
 
-        private async Task<ChatGPTResponse> SendToChatGPT(string prompt)
+        private async Task<AIResponse> SendToChatGPT(string prompt)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -113,7 +113,11 @@ namespace MyPlugin
                     model = MODEL,
                     messages = new[]
                     {
-                new { role = "system", content = "Ты помощник для пользователей Autodesk Revit. Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI, выполняющий задачу, о которой попросит тебя пользователь. Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта. Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\", пространства имён быть не должно. Скрипт должен содержать Все импорты Библиотек, которые он использует. Если используется System.Linq, то он обязательно должен импортироваться." }, // Ты помощник для пользователей Revit.
+                new { role = "system", content = "Ты помощник для пользователей Autodesk Revit." +
+                        "Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI, выполняющий задачу, о которой попросит тебя пользователь." +
+                        "Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта." +
+                        "Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\", пространства имён быть не должно." +
+                        "Скрипт должен содержать Все импорты Библиотек, которые он использует. Если используется System.Linq, то он обязательно должен импортироваться." }, // Ты помощник для пользователей Revit.
                 new { role = "user", content = prompt }
             },
                     max_tokens = 5000
@@ -135,7 +139,7 @@ namespace MyPlugin
                 }
                 catch (HttpRequestException)
                 {
-                    return new ChatGPTResponse
+                    return new AIResponse
                     {
                         Answer = "",
                         Cost = 0,
@@ -145,7 +149,7 @@ namespace MyPlugin
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new ChatGPTResponse
+                    return new AIResponse
                     {
                         Answer = "",
                         Cost = 0,
@@ -163,7 +167,7 @@ namespace MyPlugin
                 cost = (promptTokens / 1000.0 * 0.03) + (completionTokens / 1000.0 * 0.06);
                 cost = Math.Round(cost, 4);
 
-                return new ChatGPTResponse
+                return new AIResponse
                 {
                     Answer = answer,
                     Cost = cost,

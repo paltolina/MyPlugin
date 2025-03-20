@@ -81,7 +81,7 @@
 	<!-- Исходные файлы -->
 	<ItemGroup>
 		<Compile Include="App.cs" />
-		<Compile Include="ChatGPTResponse.cs" />
+		<Compile Include="AIResponse.cs" />
 		<Compile Include="Logger.cs" />
 		<Compile Include="MyCommand.cs" />
 		<Compile Include="MyPluginWindow.xaml.cs" />
