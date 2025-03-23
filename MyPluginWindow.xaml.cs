@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace MyPlugin
 {
@@ -197,6 +198,12 @@ namespace MyPlugin
         private void LogButton_Click(object sender, RoutedEventArgs e)
         {
             Logger.OpenLog();
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
     }
 }
