@@ -4,17 +4,22 @@
         Title="AI for Revit" Height="500" Width="650" ResizeMode="NoResize"
         WindowStyle="None" Background="#5B5B5B"
         WindowStartupLocation="CenterScreen"
-        Icon="icon.ico">
+        Icon="icon.ico"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
     
+    <Window.Resources>
+        <ResourceDictionary Source="/MyPlugin;component/Themes/Generic.xaml"/>
+    </Window.Resources>
+
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <!-- Заголовок -->
+            <!-- Верхняя панель -->
             <RowDefinition Height="*"/>
-            <!-- Контент -->
+            <!-- Основное содержимое -->
         </Grid.RowDefinitions>
 
-        <!-- Кастомная верхняя панель -->
+        <!-- Верхняя панель -->
         <Border Background="#CC6928" Grid.Row="0" Height="40">
             <DockPanel LastChildFill="True">
                 <TextBlock Text="AI for Revit" Foreground="White" 
@@ -23,7 +28,7 @@
             </DockPanel>
         </Border>
 
-        <!-- Основное содержимое окна -->
+        <!-- Основное содержимое -->
         <Grid Grid.Row="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
