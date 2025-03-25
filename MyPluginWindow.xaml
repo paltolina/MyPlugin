@@ -19,15 +19,31 @@
             <!-- Основное содержимое -->
         </Grid.RowDefinitions>
 
-        <!-- Верхняя панель -->
         <Border Background="#CC6928" Grid.Row="0" Height="40">
             <DockPanel LastChildFill="True">
+                <!-- Заголовок окна -->
                 <TextBlock Text="AI for Revit" Foreground="White" 
                            FontSize="16" FontWeight="Bold"
                            VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                    <!-- Кнопка свернуть -->
+                    <Button Content="−" Click="MinimizeButton_Click" Width="30" Height="30"
+                            Background="Transparent" Foreground="White"
+                            FontSize="16" FontWeight="Bold"
+                            BorderThickness="0" Padding="0"
+                            ToolTip="Свернуть окно"/>
+
+                    <!-- Кнопка закрыть -->
+                    <Button Content="✖" Click="CloseButton_Click" Width="30" Height="30"
+                            Background="Transparent" Foreground="White"
+                            FontSize="16" FontWeight="Bold"
+                            BorderThickness="0" Padding="0"
+                            ToolTip="Закрыть окно"/>
+                </StackPanel>
             </DockPanel>
         </Border>
-
+        
         <!-- Основное содержимое -->
         <Grid Grid.Row="1" Margin="20">
             <Grid.RowDefinitions>

@@ -54,13 +54,13 @@
 		<Reference Include="PresentationFramework" />
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="RevitAddInUtility">
-		  <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAddInUtility.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAddInUtility.dll</HintPath>
 		</Reference>
 		<Reference Include="RevitAPI">
-		  <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
 		</Reference>
 		<Reference Include="RevitAPIUI">
-		  <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
 		</Reference>
 		<Reference Include="System" />
 		<Reference Include="System.Buffers">

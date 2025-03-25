@@ -90,12 +90,17 @@ namespace MyPlugin
                     OutputTextBox.Text += "\nСкрипт успешно выполнен!";
                 }
 
-                Logger.SaveLog(userInput, response.Answer, response.Cost, response.ErrorMessage);
+                Logger.SaveLog(userInput, response);
             }
             catch (Exception ex)
             {
                 TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.Message}");
             }
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -200,11 +205,12 @@ namespace MyPlugin
             Logger.OpenLog();
         }
 
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
+        //private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (e.LeftButton == MouseButtonState.Pressed)
+        //        DragMove();
+        //}
+
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();  // Позволяет перемещать окно
