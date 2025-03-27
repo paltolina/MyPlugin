@@ -9,13 +9,26 @@ namespace MyPlugin
 {
     public static class Logger
     {
-        private static readonly string logsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+        private static readonly string logsDirectory =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyPluginLogs");
 
         static Logger()
         {
-            if (!Directory.Exists(logsDirectory))
+            try
             {
-                Directory.CreateDirectory(logsDirectory);
+                if (!Directory.Exists(logsDirectory))
+                {
+                    Directory.CreateDirectory(logsDirectory);
+                }
+                // Дополнительная проверка на запись
+                string testFilePath = Path.Combine(logsDirectory, "test.txt");
+                File.WriteAllText(testFilePath, "test");
+                File.Delete(testFilePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка инициализации логов: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

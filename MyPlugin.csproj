@@ -53,9 +53,6 @@
 		<Reference Include="PresentationCore" />
 		<Reference Include="PresentationFramework" />
 		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="RevitAddInUtility">
-		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAddInUtility.dll</HintPath>
-		</Reference>
 		<Reference Include="RevitAPI">
 		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
 		</Reference>
@@ -85,6 +82,7 @@
 
 	<!-- Исходные файлы -->
 	<ItemGroup>
+		<Compile Include="AIService.cs" />
 		<Compile Include="App.cs" />
 		<Compile Include="AIResponse.cs" />
 		<Compile Include="Logger.cs" />
