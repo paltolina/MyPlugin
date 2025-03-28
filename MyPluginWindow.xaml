@@ -58,7 +58,7 @@
 
                 <!-- Вывод текста -->
                 <Border Grid.Row="0" CornerRadius="6" Background="#E5E5E5" BorderBrush="#A0A0A0" BorderThickness="1">
-                    <TextBox Name="OutputTextBox" Height="300" IsReadOnly="True"
+                    <TextBox Name="OutputTextBox" Height="260" IsReadOnly="True"
                              Style="{StaticResource RoundedTextBoxStyle}"
                              TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
                 </Border>
@@ -71,7 +71,7 @@
                     <TextBox Name="InputTextBox" Height="50"
                              Style="{StaticResource RoundedTextBoxStyle}"
                              GotFocus="InputTextBox_GotFocus" LostFocus="InputTextBox_LostFocus"
-                             Text="Введите запрос..." 
+                             Text="Введите запрос" 
                              HorizontalScrollBarVisibility="Auto"/>
                 </Border>
 

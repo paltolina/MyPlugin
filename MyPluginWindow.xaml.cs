@@ -43,6 +43,8 @@ namespace MyPlugin
             OutputTextBox.Text = "Ожидание ответа...";
             AIResponse response = await _aiService.SendToChatGPT(userInput);
 
+            response.Answer = response.Answer.Replace("```csharp", String.Empty).Replace("```", String.Empty).Trim();
+
             OutputTextBox.Text = response.Answer;
 
             Logger.SaveLog(userInput, response);
