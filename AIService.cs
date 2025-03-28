@@ -15,7 +15,7 @@ namespace MyPlugin
 
         public async Task<AIResponse> SendToChatGPT(string prompt)
         {
-            TaskDialog.Show("Проверка API-ключа", $"API-ключ: {apiKey ?? "НЕ НАЙДЕН"}");
+            //TaskDialog.Show("Проверка API-ключа", $"API-ключ: {apiKey ?? "НЕ НАЙДЕН"}");
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
@@ -25,7 +25,7 @@ namespace MyPlugin
                     model = MODEL,
                     messages = new[]
                     {
-                        new { role = "system", content = "Ты помощник для пользователей Autodesk Revit." +
+                        new { role = "system", content = "Ты помощник для пользователей Autodesk Revit 2021." +
                                 "Тебе необходимо написать полностью рабочий c# скрипт, использующий RevitAPI и RevitAPIUI, выполняющий задачу, о которой попросит тебя пользователь." +
                                 "Твой ответ не должен содержать ничего более, кроме исходного кода самого скрипта." +
                                 "Класс, реализующий интерфейс IExternalCommand обязательно должен называться \"AICommand\", пространства имён быть не должно." +

@@ -13,7 +13,7 @@ namespace MyPlugin
             try
             {
                 MyPluginWindow window = new MyPluginWindow(commandData, ref message, elements);
-                window.ShowDialog();
+                window.Show();
                 return Result.Succeeded;
             }
             catch (Exception ex)
