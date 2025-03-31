@@ -11,7 +11,7 @@ namespace MyPlugin
     {
         private static readonly string apiKey = Environment.GetEnvironmentVariable("DEEPSEEK_FREE");
         private static readonly string apiUrl = "https://openrouter.ai/api/v1/chat/completions";
-        private static readonly string MODEL = "deepseek/deepseek-chat:free";
+        private static readonly string MODEL = "deepseek/deepseek-chat:free"; 
 
         public async Task<AIResponse> SendToChatGPT(string prompt)
         {
@@ -70,9 +70,10 @@ namespace MyPlugin
                 }
 
                 dynamic responseObject = JsonConvert.DeserializeObject(responseString);
-                //string answer = responseObject?.choices?[0]?.message?.content?.ToString() ?? "Ошибка: пустой ответ.";
+                
                 //string reasoning = responseObject?["choices"]?[0]?["message"]?["reasoning"]?.ToString();
                 string answer = responseObject?["choices"]?[0]?["message"]?["content"]?.ToString() ?? "Ошибка: пустой ответ.";
+                string error = responseObject?["error"]?["message"]?.ToString();
 
                 int promptTokens = responseObject?.usage?.prompt_tokens ?? 0;
                 int completionTokens = responseObject?.usage?.completion_tokens ?? 0;
@@ -83,7 +84,7 @@ namespace MyPlugin
                 {
                     Answer = answer,
                     Cost = cost,
-                    ErrorMessage = null
+                    ErrorMessage = error
                 };
             }
         }

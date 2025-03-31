@@ -58,6 +58,17 @@ namespace MyPlugin
 
             OutputTextBox.Text = response.Answer;
 
+            if (response.ErrorMessage != null)
+            {
+                MessageBox.Show(response.ErrorMessage, "Ошибка");
+                return;
+            }
+            if (response.Answer == "Ошибка: пустой ответ.")
+            {
+                MessageBox.Show("Пустой ответ.", "Ошибка");
+                return;
+            }
+
             Logger.SaveLog(userInput, response);
 
             SaveScript(response.Answer);
