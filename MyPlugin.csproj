@@ -42,7 +42,6 @@
 	  <None Remove="Resources\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="icon.ico" />
 	  <None Remove="Themes\Generic.xaml" />
 	</ItemGroup>
 
@@ -104,9 +103,6 @@
 	<!-- Файл конфигурации -->
 	<ItemGroup>
 		<None Include="packages.config" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Resource Include="icon.ico" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">
