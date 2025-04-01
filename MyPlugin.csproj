@@ -42,7 +42,6 @@
 	  <None Remove="Resources\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="icon.ico" />
 	  <None Remove="Themes\Generic.xaml" />
 	</ItemGroup>
 
@@ -54,10 +53,12 @@
 		<Reference Include="PresentationFramework" />
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="RevitAPI">
-		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPI.dll</HintPath>
+		  <Private>True</Private>
 		</Reference>
 		<Reference Include="RevitAPIUI">
-		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+		  <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPIUI.dll</HintPath>
+		  <Private>True</Private>
 		</Reference>
 		<Reference Include="System" />
 		<Reference Include="System.Buffers">
@@ -102,9 +103,6 @@
 	<!-- Файл конфигурации -->
 	<ItemGroup>
 		<None Include="packages.config" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Resource Include="icon.ico" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Properties\Resources.resx">

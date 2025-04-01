@@ -9,6 +9,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Reflection;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace MyPlugin
 {
@@ -34,21 +35,45 @@ namespace MyPlugin
             string userInput = InputTextBox.Text.Trim();
             InputTextBox.Clear();
 
-            if (string.IsNullOrWhiteSpace(userInput))
+            if (string.IsNullOrWhiteSpace(userInput) || userInput == "Введите запрос")
             {
                 TaskDialog.Show("Ошибка", "Введите сообщение перед отправкой!");
                 return;
             }
 
+            // Отключаем кнопку отправки и показываем индикатор загрузки
+            SendButton.IsEnabled = false;
+            Separator.Visibility = System.Windows.Visibility.Collapsed;
+            LoadingProgressBar.Visibility = System.Windows.Visibility.Visible;
+
             OutputTextBox.Text = "Ожидание ответа...";
             AIResponse response = await _aiService.SendToChatGPT(userInput);
 
+            // Включаем кнопку отправки и скрываем индикатор загрузки
+            SendButton.IsEnabled = true;
+            Separator.Visibility = System.Windows.Visibility.Visible;
+            LoadingProgressBar.Visibility = System.Windows.Visibility.Collapsed;
+
+            response.Answer = response.Answer.Replace("```csharp", String.Empty).Replace("```", String.Empty).Trim();
+
             OutputTextBox.Text = response.Answer;
+
+            if (response.ErrorMessage != null)
+            {
+                MessageBox.Show(response.ErrorMessage, "Ошибка");
+                return;
+            }
+            if (response.Answer == "Ошибка: пустой ответ.")
+            {
+                MessageBox.Show("Пустой ответ.", "Ошибка");
+                return;
+            }
 
             Logger.SaveLog(userInput, response);
 
             SaveScript(response.Answer);
             ExecuteScript();
+            OutputTextBox.ScrollToEnd();
         }
 
         private void SaveScript(string scriptContent)

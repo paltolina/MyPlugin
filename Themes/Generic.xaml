@@ -50,4 +50,44 @@
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
     </Style>
 
+    <!-- Стиль для закругленного ProgressBar -->
+    <Style x:Key="RoundedProgressBar" TargetType="ProgressBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border CornerRadius="5" Background="#E5E5E5" BorderThickness="1" BorderBrush="#A0A0A0">
+                        <Grid>
+                            <Rectangle x:Name="Animation" 
+                                 RadiusX="5" RadiusY="5" 
+                                 Fill="#ff8000"
+                                 Width="50" 
+                                 HorizontalAlignment="Left">
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform X="0"/>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                        Storyboard.TargetName="Animation"
+                                        Storyboard.TargetProperty="(Rectangle.RenderTransform).(TranslateTransform.X)"
+                                        From="0" 
+                                        To="554" 
+                                        Duration="0:0:1.5"
+                                        AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
