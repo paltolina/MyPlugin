@@ -13,6 +13,7 @@ using System.Windows.Controls;
 
 namespace MyPlugin
 {
+
     public partial class MyPluginWindow : Window
     {
         private readonly ExternalCommandData _commandData;

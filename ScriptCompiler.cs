@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
 
 namespace MyPlugin
 {
@@ -80,8 +81,8 @@ namespace MyPlugin
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка!");
-                    throw ex;
-                    //return Result.Failed;
+                    //throw ex;
+                    return Result.Failed;
                 }
             }
 
